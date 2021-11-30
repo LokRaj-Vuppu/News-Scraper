@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="pages">
+        {% if is_paginated %}
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <a class="btn btn-primary mb-4" href="?page={{num}}">{{num}}</a>
+                {% else %}
+                    <a class="btn btn-outline-primary mb-4" href="?page={{num}}">{{num}}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-primary mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+        {% endif %}
+    </div>
+    <form method="GET" class="row">
+        <div class="col input-group mb-3">
+            <input name="title" type="search" class="form-control form-control-lg" placeholder="Search By Title">
+            <button type="submit" class="input-group-text btn-success">Search</button>
+        </div>
+        <div class="col">
+            
+            <div class="row mt-3">
+                <div class="col pl-5">
+                    <h6>Total Articles - {{ total_count }} </h6>
+                </div>
+                
+                <div class="col">
+                    <h6>Articles in this page - {{ object_list.count }} </h6>
+                </div>
+                
+            </div>
+        </div>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Source</th>
+                <th scope="col">Title</th>
+                <th scope="col">Published</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+                <tr>
+                    <th scope="row">{{ item.source }}</th>
+                    <td><a href="{{ item.link }}" target="_blank" style="text-decoration: none;">{{ item.title }}</a></td>
+                    <td>{{ item.published_date}}</td>
+                </tr>
+            {% endfor %}
+            
+        </tbody>
+    </table>
+{% endblock content%}

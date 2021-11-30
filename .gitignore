@@ -1,0 +1,4 @@
+chromedriver
+db.sqlite3
+.env
+celerybeat-schedule
